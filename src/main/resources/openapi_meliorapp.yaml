@@ -1,0 +1,1043 @@
+openapi: 3.0.1
+info:
+  title: Melior REST
+  description: Melior sample commercial application with REST architecture
+  version: 0.0.0
+servers:
+  - url: http://localhost:9966/melior/api
+tags:
+  - name: customer
+    description: Endpoints related to customers
+  - name: order
+    description: Endpoints related to orders
+  - name: fragrancetype
+    description: Enpoints related to fragrance types
+  - name: failing
+    description: Endpoints returning error
+paths:
+  /error:
+    get:
+      tags:
+        - failing
+      operationId: failingRequest
+      summary: Always fails
+      description: Produces sample error response.
+      responses:
+        200:
+          description: Never returned.
+          headers:
+            ETag:
+              description: An ID for this version of the response
+              schema:
+                type: string
+          content:
+            text/plain:
+              schema:
+                type: string
+        304:
+          description: Not modified.
+          headers:
+            ETag:
+              description: An ID for this version of the response
+              schema:
+                type: string
+        400:
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+  /customers:
+    get:
+      tags:
+        - customer
+      operationId: listCustomers
+      summary: lists all customers
+      description: return an array of customers
+      responses:
+        200:
+          description: Customers found an returned
+          headers:
+            ETag:
+              description: An ID for this version of the response
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        304:
+          description: Not modified
+          headers:
+            ETag:
+              description: an ID for this version of the resposne
+              schema:
+                type: string
+        500:
+          description: Server error
+          headers:
+            ETag:
+              description: an ID for this version of the response
+              schema:
+                $ref: '#/components/schemas/RestError'
+    post:
+      tags:
+        - customer
+      operationId: addCustomer
+      summary: add a customer
+      description: record a new customer's information
+      requestBody:
+        description: The Customer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerFields'
+        required: true
+      responses:
+        201:
+          description: The customer was sucessfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+  /customers/{customerId}:
+    get:
+      tags:
+        - customer
+      operationId: getCustomer
+      summary: get a Customer by ID
+      description: return a Customer or 404 not found
+      parameters:
+        - name: customerId
+          in: path
+          description: The ID of the customer
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+      responses:
+        200:
+          description: Customer found and returned
+          content:
+            headers:
+            ETag:
+              description: An ID for this version of the response.
+              schema:
+                type: string
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Customer'
+        304:
+          description: Not modified
+          headers:
+            ETag:
+              description: an ID for this version of the resposne
+              schema:
+                type: string
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+    put:
+      tags:
+        - customer
+      operationId: updateCustomer
+      summary: update a Customer's information
+      description: Update a Customer's information with specified information
+      parameters:
+        - name: customerId
+          in: path
+          description: The ID of the Customer
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+      requestBody:
+        description: The customer's information to be used for updating.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerFields'
+        required: true
+      responses:
+        200:
+          description: The customer is successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+    delete:
+      tags:
+        - customer
+      operationId: deleteCustomer
+      summary: delete a specified Customer
+      description: return a Customer or 404 not found
+      parameters:
+        - name: customerId
+          in: path
+          description: The ID of the customer
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+      responses:
+        204:
+          description: The customer is successfully deleted
+          headers:
+            ETag:
+              description: An ID for this version of the response
+              schema:
+                type: string
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+
+  /customers/{customerId}/orders:
+    post:
+      tags:
+        - order
+      operationId: addOrder
+      summary: add order to a specified Customer
+      description: record a new order for a specified Customer
+      parameters:
+        - name: customerId
+          in: path
+          description: The ID of the customer
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+      requestBody:
+        description: information of the new order
+        content:
+          application/json:
+            $ref: '#components/schemas/OrderFields'
+        required: true
+      responses:
+        201:
+          description: The order was sucessfully added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+  /customers/{customerId}/orders/{ordersId}:
+    get:
+      tags:
+        - order
+      operationId: getCustomersOrder
+      summary: get a specified Order of a specified Customer
+      description: return an Order
+      parameters:
+        - name: customerId
+          in: path
+          description: The ID of the customer
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+        - name: orderId
+          in: path
+          description: The ID of the customer
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+      responses:
+        200:
+          description: Order found and returned
+          content:
+            headers:
+            ETag:
+              description: An ID for this version of the response.
+              schema:
+                type: string
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Order'
+        304:
+          description: Not modified
+          headers:
+            ETag:
+              description: an ID for this version of the resposne
+              schema:
+                type: string
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+    put:
+      tags:
+        - order
+      operationId: updateCustomersOrder
+      summary: Update a specified Order of a specified Customer
+      description: Update an order's information with specified information
+      parameters:
+        - name: customerId
+          in: path
+          description: The ID of the Customer
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+      requestBody:
+        description: The Order's information to be used for updating.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderFields'
+        required: true
+      responses:
+        200:
+          description: The Order is successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+  /orders:
+    get:
+      tags:
+        - order
+      operationId: listOrders
+      summary: lists all Orders
+      description: return an array of Order
+      responses:
+        200:
+          description: Orders found an returned
+          headers:
+            ETag:
+              description: An ID for this version of the response
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        304:
+          description: Not modified
+          headers:
+            ETag:
+              description: an ID for this version of the resposne
+              schema:
+                type: string
+        500:
+          description: Server error
+          headers:
+            ETag:
+              description: an ID for this version of the response
+              schema:
+                $ref: '#/components/schemas/RestError'
+    post:
+      tags:
+        - order
+      operationId: addOrder
+      summary: Add an Order
+      description: record a new Order's information
+      requestBody:
+        description: information of the new order
+        content:
+          application/json:
+            $ref: '#components/schemas/OrderFields'
+        required: true
+      responses:
+        201:
+          description: The Order was sucessfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+  /orders/{orderId}:
+    get:
+      tags:
+        - order
+      operationId: getOrder
+      summary: get an Order by ID
+      description: return an Order or 404 not found
+      parameters:
+        - name: orderId
+          in: path
+          description: The ID of the Order
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+      responses:
+        200:
+          description: Order found and returned
+          content:
+            headers:
+            ETag:
+              description: An ID for this version of the response.
+              schema:
+                type: string
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Order'
+        304:
+          description: Not modified
+          headers:
+            ETag:
+              description: an ID for this version of the resposne
+              schema:
+                type: string
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+    put:
+      tags:
+        - order
+      operationId: updateOrder
+      summary: update an Order's information
+      description: Update an Order's information with specified information
+      parameters:
+        - name: orderId
+          in: path
+          description: The ID of the Order
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+      requestBody:
+        description: The Order's information to be used for updating.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderFields'
+        required: true
+      responses:
+        200:
+          description: The Order is successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+    delete:
+      tags:
+        - order
+      operationId: deleteOrder
+      summary: delete an Order by ID
+      description: delete and order or return 404 not found
+      parameters:
+        - name: orderId
+          in: path
+          description: The ID of the Order
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+      responses:
+        204:
+          description: The Order is successfully deleted
+          headers:
+            ETag:
+              description: An ID for this version of the response
+              schema:
+                type: string
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+  /fragrancetypes:
+    get:
+      tags:
+        - fragrancetype
+      operationId: listFragranceType
+      summary: lists all fragrance type
+      description: return an array of fragrance type
+      responses:
+        200:
+          description: Fragrance types found an returned
+          headers:
+            ETag:
+              description: An ID for this version of the response
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FragranceType'
+        304:
+          description: Not modified
+          headers:
+            ETag:
+              description: an ID for this version of the resposne
+              schema:
+                type: string
+        500:
+          description: Server error
+          headers:
+            ETag:
+              description: an ID for this version of the response
+              schema:
+                $ref: '#/components/schemas/RestError'
+    post:
+      tags:
+        - fragrancetype
+      perationId: addFragranceType
+      summary: add a fragrance type
+      description: record a new fragrance type's information
+      requestBody:
+        description: The fragrance type
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FragranceTypeFields'
+        required: true
+      responses:
+        201:
+          description: The fragrance was sucessfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FragranceType'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+  /fragrancetypes/{fragranceTypeId}:
+    get:
+      tags:
+        - fragrancetype
+      operationId: getFragranceType
+      summary: get a Fragrance Type by ID
+      description: return a Fragrance Type or 404 not found
+      parameters:
+        - name: fragranceTypeId
+          in: path
+          description: The ID of the fragrance
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+      responses:
+        200:
+          description: Fragrance Type found and returned
+          content:
+            headers:
+            ETag:
+              description: An ID for this version of the response.
+              schema:
+                type: string
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/FragranceType'
+        304:
+          description: Not modified
+          headers:
+            ETag:
+              description: an ID for this version of the resposne
+              schema:
+                type: string
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+    put:
+      tags:
+        - fragrancetype
+      operationId: updateFragranceType
+      summary: update a Fragrance Type by ID
+      description: return a Fragrance Type or 404 not found
+      parameters:
+        - name: fragranceTypeId
+          in: path
+          description: The ID of the fragrance
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+      requestBody:
+        description: The fragrance's information to be used for updating.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FragranceTypeFields'
+        required: true
+      responses:
+        200:
+          description: The customer is successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FragranceType'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+    delete:
+      tags:
+        - fragrancetype
+      operationId: deleteFragranceType
+      summary: delete a Fragrance Type by ID
+      description: delete a Fragrance Type or 404 not found
+      parameters:
+        - name: fragranceTypeId
+          in: path
+          description: The ID of the fragrance
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+      responses:
+        204:
+          description: The Fragrance Type is successfully deleted
+          headers:
+            ETag:
+              description: An ID for this version of the response
+              schema:
+                type: string
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestError'
+      
+components:
+  schemas:
+    RestError:
+      title: REST Error
+      description: The schema for all error responses
+      type: object
+      properties:
+        status:
+          title: Status
+          description: The HTTP status code.
+          type: integer
+          format: int32
+          example: 400
+          readOnly: true
+        error:
+          title: Error
+          description: The short error message.
+          type: string
+          example: Bad Request
+          readOnly: true
+        path:
+          title: Path
+          description: The path of the URL for this request.
+          type: string
+          format: uri
+          example: '/api/owners'
+          readOnly: true
+        timestamp:
+          title: Timestamp
+          description: The time the error occured.
+          type: string
+          format: date-time
+          example: '2019-08-21T21:41:46.158+0000'
+          readOnly: true
+        message:
+          title: Message
+          description: The long error message.
+          type: string
+          example: 'Request failed schema validation'
+          readOnly: true
+      required:
+        - status
+        - error
+        - path
+        - timestamp
+        - message
+    CustomerFields:
+      title: Customer fields
+      description: Editable fields of a customer
+      type: object
+      properties:
+        firstName:
+          title: First name
+          description: The first name of the customer
+          type: string
+          minLength: 1
+          maxLength: 30
+          pattern: '^[a-zA-Z]*$'
+          example: Bob
+        lastName:
+          title: Last name
+          description: The last name of the customer
+          type: string
+          minLength: 1
+          maxLength: 30
+          pattern: '^[a-zA-Z]*$'
+          example: Cracker
+        address:
+          title: Address
+          description: The mailing address of the customer
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: '110 W. Arapaho St'
+        city:
+          title: City
+          description: The city of the customer
+          type: string
+          minLength: 1
+          maxLength: 80
+          example: Dallas
+        telephone:
+          title: Telephone number
+          description: The telephone number of the customer
+          type: string
+          minLength: 1
+          maxLength: 20
+          pattern: '^[0-9]*$'
+          example: '469 999 8899'
+      required:
+        - firstName
+        - lastName
+        - address
+        - city
+        - telephone
+    Customer:
+      title: Customer
+      description: A Customer
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/CustomerFields'
+        - type: object
+          properties:
+            id:
+              title: ID
+              description: The ID of the customer
+              type: integer
+              format: int32
+              minimum: 0
+              example: 1
+              readOnly: true
+            orders:
+              title: Orders
+              description: The orders made by this customer
+              type: array
+              items:
+                $ref: '#/components/schemas/Order'
+              readOnly: true
+          required:
+            - Orders
+    OrderFields:
+      title: Order fields
+      description: Editable fields of an Order
+      type: object
+      properties:
+        quantity:
+          title: quantity
+          description: quantity of the product in this order
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 50
+          example: 10
+        dateCreated:
+          title: creation date
+          description: date the order is created
+          type: string
+          format: date
+          example: '2023-02-20'
+        fragranceType:
+          $ref: '#/components/schemas/FragranceType'
+      required:
+        - quantity
+        - dateCreated
+        - fragranceType
+    Order:
+      title: Order
+      description: An Order
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/OrderFields'
+        - type: object
+          properties:
+            id:
+              title: ID
+              description: The ID of the order
+              type: integer
+              format: int32
+              minimum: 0
+              example: 1
+              readOnly: true
+            customerId:
+              title: Customer ID
+              description: ID of the Customer
+              type: integer 
+              format: int32
+              minimum: 0
+              example: 1
+              readOnly: true
+          required:
+            - id
+            - customerID
+            - fragranceType
+    FragranceTypeFields:
+      title: Fragrance Type Fields
+      description: editable fields of Fragrance Type
+      type: object
+      propreties:
+        fragranceName:
+          type: string
+          minLength: 1
+          maxLength: 30
+          pattern: '^[a-zA-Z]*$'
+          example: Apricot
+      required:
+        - fragranceName
+    FragranceType:
+      title: Fragrance Type
+      description: A Type of fragrance
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/FragranceTypeFields'
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+              minimum: 0
+              example: 1
+              readOnly: true
+          required:
+            - id
+            - fragranceName
