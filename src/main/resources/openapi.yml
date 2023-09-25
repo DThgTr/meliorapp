@@ -2,9 +2,9 @@ openapi: 3.0.1
 info:
   title: Melior REST
   description: Melior sample commercial application with REST architecture
-  version: 0.0.0
+  version: '0.0.0'
 servers:
-  - url: http://localhost:9966/melior/api
+  - url: http://localhost:9966/meliorapp/api
 tags:
   - name: customer
     description: Endpoints related to customers
@@ -133,17 +133,16 @@ paths:
             example: 1
       responses:
         200:
-          description: Customer found and returned
-          content:
-            headers:
+          description: Customer details found and returned.
+          headers:
             ETag:
               description: An ID for this version of the response.
               schema:
                 type: string
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Customer'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
         304:
           description: Not modified
           headers:
@@ -264,7 +263,7 @@ paths:
     post:
       tags:
         - order
-      operationId: addOrder
+      operationId: addCustomersOrder
       summary: add order to a specified Customer
       description: record a new order for a specified Customer
       parameters:
@@ -281,7 +280,8 @@ paths:
         description: information of the new order
         content:
           application/json:
-            $ref: '#components/schemas/OrderFields'
+            schema:
+              $ref: '#/components/schemas/OrderFields'
         required: true
       responses:
         201:
@@ -302,7 +302,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RestError'
-  /customers/{customerId}/orders/{ordersId}:
+  /customers/{customerId}/orders/{orderId}:
     get:
       tags:
         - order
@@ -321,7 +321,7 @@ paths:
             example: 1
         - name: orderId
           in: path
-          description: The ID of the customer
+          description: The ID of the order
           required: true
           schema:
             type: integer
@@ -331,16 +331,15 @@ paths:
       responses:
         200:
           description: Order found and returned
-          content:
-            headers:
+          headers:
             ETag:
               description: An ID for this version of the response.
               schema:
                 type: string
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Order'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
         304:
           description: Not modified
           headers:
@@ -376,6 +375,15 @@ paths:
         - name: customerId
           in: path
           description: The ID of the Customer
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 1
+        - name: orderId
+          in: path
+          description: The ID of the Order
           required: true
           schema:
             type: integer
@@ -459,7 +467,8 @@ paths:
         description: information of the new order
         content:
           application/json:
-            $ref: '#components/schemas/OrderFields'
+            schema:
+              $ref: '#/components/schemas/OrderFields'
         required: true
       responses:
         201:
@@ -500,16 +509,15 @@ paths:
       responses:
         200:
           description: Order found and returned
-          content:
-            headers:
+          headers:
             ETag:
               description: An ID for this version of the response.
               schema:
                 type: string
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Order'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
         304:
           description: Not modified
           headers:
@@ -663,7 +671,7 @@ paths:
     post:
       tags:
         - fragrancetype
-      perationId: addFragranceType
+      operationId: addFragranceType
       summary: add a fragrance type
       description: record a new fragrance type's information
       requestBody:
@@ -712,16 +720,15 @@ paths:
       responses:
         200:
           description: Fragrance Type found and returned
-          content:
-            headers:
+          headers:
             ETag:
               description: An ID for this version of the response.
               schema:
                 type: string
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/FragranceType'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FragranceType'
         304:
           description: Not modified
           headers:
@@ -837,7 +844,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RestError'
-      
+
 components:
   schemas:
     RestError:
@@ -863,11 +870,11 @@ components:
           description: The path of the URL for this request.
           type: string
           format: uri
-          example: '/api/owners'
+          example: '/api/customers'
           readOnly: true
         timestamp:
           title: Timestamp
-          description: The time the error occured.
+          description: The time the error occurred.
           type: string
           format: date-time
           example: '2019-08-21T21:41:46.158+0000'
@@ -904,7 +911,7 @@ components:
           minLength: 1
           maxLength: 30
           pattern: '^[a-zA-Z]*$'
-          example: Cracker
+          example: Cookie
         address:
           title: Address
           description: The mailing address of the customer
@@ -957,7 +964,7 @@ components:
                 $ref: '#/components/schemas/Order'
               readOnly: true
           required:
-            - Orders
+            - orders
     OrderFields:
       title: Order fields
       description: Editable fields of an Order
@@ -971,8 +978,8 @@ components:
           minimum: 1
           maximum: 50
           example: 10
-        dateCreated:
-          title: creation date
+        date:
+          title: Date
           description: date the order is created
           type: string
           format: date
@@ -981,7 +988,7 @@ components:
           $ref: '#/components/schemas/FragranceType'
       required:
         - quantity
-        - dateCreated
+        - date
         - fragranceType
     Order:
       title: Order
@@ -1002,7 +1009,7 @@ components:
             customerId:
               title: Customer ID
               description: ID of the Customer
-              type: integer 
+              type: integer
               format: int32
               minimum: 0
               example: 1
@@ -1015,7 +1022,7 @@ components:
       title: Fragrance Type Fields
       description: editable fields of Fragrance Type
       type: object
-      propreties:
+      properties:
         fragranceName:
           type: string
           minLength: 1
