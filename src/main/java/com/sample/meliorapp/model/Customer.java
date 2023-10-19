@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
 
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "customers")
@@ -85,11 +85,24 @@ public class Customer extends BaseEntity {
         this.email = email;
     }
 
-    public Set<Order> getOrders() {
-        return orders;
+    //----------------------------ORDER-RELATED----------------------------
+    private Set<Order> getOrdersInternal() {
+        if (this.orders == null) {
+            this.orders = new HashSet<>();
+        }
+        return this.orders;
+    }
+    public List<Order> getOrders() {
+        List<Order> ordersList = new ArrayList<>(getOrdersInternal());
+        return Collections.unmodifiableList(ordersList);
     }
 
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
+    public void setOrders(List<Order> orders) {
+        this.orders = new HashSet<>(orders);
+    }
+
+    public void addOrder(Order order) {
+        order.setCustomer(this);
+        this.orders.add(order);
     }
 }
