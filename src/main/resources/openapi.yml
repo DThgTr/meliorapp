@@ -934,12 +934,20 @@ components:
           maxLength: 20
           pattern: '^[0-9]*$'
           example: '469 999 8899'
+        email:
+          title: Email address
+          description: Email address of the customer
+          type: string
+          minLength: 1
+          maxLength: 255
+          pattern: '^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,})$'
       required:
         - firstName
         - lastName
         - address
         - city
         - telephone
+        - email
     Customer:
       title: Customer
       description: A Customer
@@ -978,12 +986,6 @@ components:
           minimum: 1
           maximum: 50
           example: 10
-        date:
-          title: Date
-          description: date the order is created
-          type: string
-          format: date
-          example: '2023-02-20'
         fragranceType:
           $ref: '#/components/schemas/FragranceType'
       required:
