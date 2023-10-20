@@ -79,6 +79,19 @@ public class ServiceTests {
     }
 
     @Test
+    void shouldUpdateCustomer() {
+        Customer customer = this.meliorService.findCustomerById(1);
+        customer.setFirstName("UpdatedJeffOne");
+        customer.setLastName("UpdatedMontayaOne");
+
+        this.meliorService.saveCustomer(customer);
+
+        customer = this.meliorService.findCustomerById(1);
+        assertThat(customer.getFirstName()).isEqualTo("UpdatedJeffOne");
+        assertThat(customer.getLastName()).isEqualTo("UpdatedMontayaOne");
+    }
+
+    @Test
     void shouldDeleteCustomer() {
         Customer customer = this.meliorService.findCustomerById(1);
         this.meliorService.deleteCustomer(customer);
@@ -91,4 +104,7 @@ public class ServiceTests {
 
 
     //----------------------------FRAGRANCE-RELATED----------------------------
+  
+
+
 }
