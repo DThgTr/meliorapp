@@ -12,9 +12,9 @@ INSERT INTO customers VALUES (10, 'Het', 'Yatamon', '110 SpringCreek St.', 'City
 INSERT INTO fragrances VALUES (1, 'lavender');
 INSERT INTO fragrances VALUES (2, 'rose');
 INSERT INTO fragrances VALUES (3, 'jasmine');
-INSERT INTO fragrances VALUES (4, 'lemon');
-INSERT INTO fragrances VALUES (5, 'peppermint');
-INSERT INTO fragrances VALUES (6, 'Vanilla');
+INSERT INTO fragrances VALUES (4, 'citrus mild');
+INSERT INTO fragrances VALUES (5, 'citrus moderate');
+INSERT INTO fragrances VALUES (6, 'citrus harsh');
 
 INSERT INTO orders VALUES (1, 5, 1, 1);
 INSERT INTO orders VALUES (2, 7, 6, 2);
