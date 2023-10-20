@@ -1,13 +1,16 @@
 package com.sample.meliorapp.Service;
 
 import com.sample.meliorapp.model.Customer;
+import com.sample.meliorapp.model.FragranceType;
 import com.sample.meliorapp.rest.service.MeliorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,6 +39,24 @@ public class ServiceTests {
         assertThat(customer.getOrders().get(0).getQuantity()).isEqualTo(5);
         assertThat(customer.getOrders().get(0).getFragranceType()).isNotNull();
         assertThat(customer.getOrders().get(0).getFragranceType().getName()).isEqualTo("lavender");
+    }
+    @Test
+    void shouldFindAllCustomer() {
+        Collection<Customer> customers = this.meliorService.findAllCustomer();
+        List<Customer> customerList = new ArrayList<>(customers);
+        assertThat(customerList.size()).isEqualTo(10);
+
+        assertThat(customerList.get(0).getFirstName()).isEqualTo("JeffOne");
+        assertThat(customerList.get(0).getLastName()).isEqualTo("MontayaOne");
+
+        assertThat(customerList.get(2).getFirstName()).isEqualTo("JeffThree");
+        assertThat(customerList.get(2).getLastName()).isEqualTo("MontayaThree");
+
+        assertThat(customerList.get(4).getFirstName()).isEqualTo("JeffFive");
+        assertThat(customerList.get(4).getLastName()).isEqualTo("MontayaFive");
+
+        assertThat(customerList.get(9).getFirstName()).isEqualTo("Het");
+        assertThat(customerList.get(9).getLastName()).isEqualTo("Yatamon");
     }
 
     @Test
@@ -70,4 +91,5 @@ public class ServiceTests {
 
 
     //-------------------FRAGRANCE-RELATED-------------------
+
 }
