@@ -94,7 +94,7 @@ public class CustomerControllerTests {
         //---------------Mock Orders---------------
         // Mock fragrance type
         FragranceTypeDto fragranceType = new FragranceTypeDto();
-        fragranceType.id(2).fragranceName("lavender");
+        fragranceType.id(2).name("lavender");
 
         // Mock orders
         orders = new ArrayList<>();
@@ -115,7 +115,7 @@ public class CustomerControllerTests {
         order.id(id)
             .customerId(customer.getId())
             .quantity(quantity)
-            .fragranceType(fragranceType.id(2).fragranceName("lavender"));
+            .fragranceType(fragranceType.id(2).name("lavender"));
         return order;
     }
     //=======================CUSTOMERS TESTS=======================

@@ -990,7 +990,6 @@ components:
           $ref: '#/components/schemas/FragranceType'
       required:
         - quantity
-        - date
         - fragranceType
     Order:
       title: Order
@@ -1025,14 +1024,14 @@ components:
       description: editable fields of Fragrance Type
       type: object
       properties:
-        fragranceName:
+        name:
           type: string
           minLength: 1
           maxLength: 30
           pattern: '^[a-zA-Z]*$'
           example: Apricot
       required:
-        - fragranceName
+        - name
     FragranceType:
       title: Fragrance Type
       description: A Type of fragrance
@@ -1049,4 +1048,4 @@ components:
               readOnly: true
           required:
             - id
-            - fragranceName
+            - name
