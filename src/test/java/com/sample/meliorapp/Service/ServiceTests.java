@@ -20,7 +20,7 @@ public class ServiceTests {
     @Autowired
     MeliorService meliorService;
 
-    //-------------------CUSTOMER-RELATED-------------------
+    //----------------------------CUSTOMER-RELATED----------------------------
     @Test
     void shouldFindCustomersByLastName() {
         Collection<Customer> customers = this.meliorService.findCustomerByLastName("Yatamon");
@@ -61,9 +61,6 @@ public class ServiceTests {
 
     @Test
     void shouldSaveNewCustomer() {
-        Collection<Customer> customers = this.meliorService.findCustomerByLastName("Montaya");
-        int foundSize = customers.size();
-
         Customer customer = new Customer();
         customer.setFirstName("JeffNew");
         customer.setLastName("MontayaNew");
@@ -74,8 +71,11 @@ public class ServiceTests {
 
         meliorService.saveCustomer(customer);
         assertThat(customer.getId()).isNotEqualTo(0);
-        customers = this.meliorService.findCustomerByLastName("Montaya");
-        assertThat(customers.size()).isEqualTo(foundSize + 1);
+
+        Collection<Customer> newCustomerColWrap = this.meliorService.findCustomerByLastName("MontayaNew");
+        List<Customer> newCustomerListWrap = new ArrayList<>(newCustomerColWrap);
+        assertThat(newCustomerListWrap.get(0).getFirstName()).isEqualTo("JeffNew");
+        assertThat(newCustomerListWrap.get(0).getLastName()).isEqualTo("MontayaNew");
     }
 
     @Test
@@ -87,9 +87,8 @@ public class ServiceTests {
         assertThat(customer).isNull();
     }
 
-    //-------------------ORDER-RELATED-------------------
+    //----------------------------ORDER-RELATED----------------------------
 
 
-    //-------------------FRAGRANCE-RELATED-------------------
-
+    //----------------------------FRAGRANCE-RELATED----------------------------
 }
