@@ -118,7 +118,7 @@ public class ServiceTests {
         Collection<FragranceType> fragrances = this.meliorService.findFragranceByName("citrus");
         assertThat(fragrances.size()).isEqualTo(3);
 
-        fragrances = this.meliorService.findFragranceByName("sailor odor");
+        fragrances = this.meliorService.findFragranceByName("sailorOdor");
         assertThat(fragrances.isEmpty()).isTrue();
     }
     @Test
@@ -146,12 +146,12 @@ public class ServiceTests {
     @Test
     void shouldUpdateFragrance() {
         FragranceType fragrance = this.meliorService.findFragranceById(1);
-        fragrance.setName("updated jasmine");
+        fragrance.setName("updatedJasmine");
 
         this.meliorService.saveFragranceType(fragrance);
 
         fragrance = this.meliorService.findFragranceById(1);
-        assertThat(fragrance.getName()).isEqualTo("updated jasmine");
+        assertThat(fragrance.getName()).isEqualTo("updatedJasmine");
     }
     /*  UNRESOLVED ORDER MANYTOONE CONSTRAINT
     @Test
