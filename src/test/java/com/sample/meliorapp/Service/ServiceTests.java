@@ -6,6 +6,7 @@ import com.sample.meliorapp.rest.service.MeliorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class ServiceTests {
     }
 
     @Test
+    @DirtiesContext
     void shouldSaveNewCustomer() {
         Customer customer = new Customer();
         customer.setFirstName("JeffNew");
@@ -79,6 +81,7 @@ public class ServiceTests {
     }
 
     @Test
+    @DirtiesContext
     void shouldUpdateCustomer() {
         Customer customer = this.meliorService.findCustomerById(1);
         customer.setFirstName("UpdatedJeffOne");
@@ -92,6 +95,7 @@ public class ServiceTests {
     }
 
     @Test
+    @DirtiesContext
     void shouldDeleteCustomer() {
         Customer customer = this.meliorService.findCustomerById(1);
         this.meliorService.deleteCustomer(customer);
@@ -104,7 +108,59 @@ public class ServiceTests {
 
 
     //----------------------------FRAGRANCE-RELATED----------------------------
-  
+    @Test
+    void shouldFindFragranceById() {
+        FragranceType fragranceType = this.meliorService.findFragranceById(3);
+        assertThat(fragranceType.getName()).isEqualTo("jasmine");
+    }
+    @Test
+    void shouldFindFragranceByName() {
+        Collection<FragranceType> fragrances = this.meliorService.findFragranceByName("citrus");
+        assertThat(fragrances.size()).isEqualTo(3);
 
+        fragrances = this.meliorService.findFragranceByName("sailor odor");
+        assertThat(fragrances.isEmpty()).isTrue();
+    }
+    @Test
+    void shouldFindAllFragrance() {
+        Collection<FragranceType> fragrances = this.meliorService.findAllFragrance();
+        List<FragranceType> fragrancesList = new ArrayList<>(fragrances);
+        assertThat(fragrances.size()).isEqualTo(6);
 
+        assertThat(fragrancesList.get(0).getName()).isEqualTo("lavender");
+        assertThat(fragrancesList.get(1).getName()).isEqualTo("rose");
+        assertThat(fragrancesList.get(2).getName()).isEqualTo("jasmine");
+    }
+    @Test
+    void shouldSaveNewFragrance() {
+        FragranceType fragrance = new FragranceType();
+        fragrance.setName("bougainvillea");
+
+        this.meliorService.saveFragranceType(fragrance);
+        assertThat(fragrance.getId()).isNotEqualTo(0);
+
+        Collection<FragranceType> newFragranceColWrap = this.meliorService.findFragranceByName("bougainvillea");
+        List<FragranceType> newFragranceListWrap = new ArrayList<>(newFragranceColWrap);
+        assertThat(newFragranceListWrap.get(0).getName()).isEqualTo("bougainvillea");
+    }
+    @Test
+    void shouldUpdateFragrance() {
+        FragranceType fragrance = this.meliorService.findFragranceById(1);
+        fragrance.setName("updated jasmine");
+
+        this.meliorService.saveFragranceType(fragrance);
+
+        fragrance = this.meliorService.findFragranceById(1);
+        assertThat(fragrance.getName()).isEqualTo("updated jasmine");
+    }
+    /*  UNRESOLVED ORDER MANYTOONE CONSTRAINT
+    @Test
+    void shouldDeleteFragrance() {
+        FragranceType fragrance = this.meliorService.findFragranceById(1);
+        this.meliorService.deleteFragranceType(fragrance);
+
+        fragrance = this.meliorService.findFragranceById(1);
+        assertThat(fragrance).isNull();
+    }
+     */
 }
