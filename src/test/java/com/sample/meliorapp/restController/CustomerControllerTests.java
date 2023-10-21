@@ -172,7 +172,6 @@ public class CustomerControllerTests {
 
         ObjectMapper mapper = new ObjectMapper();
         String newCustomerAsJSON = mapper.writeValueAsString(newCustomerDto);
-        //System.out.println(newCustomerAsJSON);
 
         this.mockMvc.perform(post("/api/customers")
                                 .content(newCustomerAsJSON)
