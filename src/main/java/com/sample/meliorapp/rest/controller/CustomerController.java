@@ -1,7 +1,9 @@
 package com.sample.meliorapp.rest.controller;
 
 import com.sample.meliorapp.Mapper.CustomerMapper;
+import com.sample.meliorapp.Mapper.OrderMapper;
 import com.sample.meliorapp.model.Customer;
+import com.sample.meliorapp.model.Order;
 import com.sample.meliorapp.rest.api.CustomersApi;
 import com.sample.meliorapp.rest.dto.CustomerDto;
 import com.sample.meliorapp.rest.dto.CustomerFieldsDto;
@@ -26,10 +28,13 @@ import java.util.List;
 public class CustomerController implements CustomersApi {
     private final MeliorService meliorService;
     private final CustomerMapper customerMapper;
+    private final OrderMapper orderMapper;
     public CustomerController(MeliorService meliorService,
-                                CustomerMapper customerMapper) {
+                                CustomerMapper customerMapper,
+                                OrderMapper orderMapper) {
         this.meliorService = meliorService;
         this.customerMapper = customerMapper;
+        this.orderMapper = orderMapper;
     }
     //------------------------Customers-related------------------------
     //GET
@@ -91,14 +96,24 @@ public class CustomerController implements CustomersApi {
     }
 
     //------------------------Orders-related------------------------
-    //GET
-    @Override
-    public ResponseEntity<OrderDto> getCustomersOrder(Integer customerId, Integer orderId) {
-        return CustomersApi.super.getCustomersOrder(customerId, orderId);
-    }
     //POST
     @Override
     public ResponseEntity<OrderDto> addCustomersOrder(Integer customerId, OrderFieldsDto orderFieldsDto) {
-        return CustomersApi.super.addCustomersOrder(customerId, orderFieldsDto);
+        Order newOrder = orderMapper.toOrder(orderFieldsDto);
+
+        Customer customer = this.meliorService.findCustomerById(customerId);
+        customer.addOrder(newOrder);
+
+        this.meliorService.saveOrder(newOrder);
+        this.meliorService.saveCustomer(customer);
+
+        OrderDto newOrderDto = this.orderMapper.toOrderDto(newOrder);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(UriComponentsBuilder
+                                .newInstance()
+                                .path("/api/orders/{id}")
+                                .buildAndExpand(newOrder.getId())
+                                .toUri());
+        return new ResponseEntity<>(newOrderDto, headers, HttpStatus.CREATED);
     }
 }
