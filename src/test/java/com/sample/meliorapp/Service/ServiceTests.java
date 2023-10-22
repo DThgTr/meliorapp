@@ -36,7 +36,7 @@ public class ServiceTests {
     }
 
     @Test
-    void shouldFindSingleCustomerWithOrder() {
+    void shouldFindCustomerByIdAndWithOrder() {
         Customer customer = this.meliorService.findCustomerById(1);
         assertThat(customer).isNotNull();
         assertThat(customer.getLastName()).isEqualTo("MontayaOne");
