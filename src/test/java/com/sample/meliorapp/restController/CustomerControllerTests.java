@@ -293,18 +293,37 @@ public class CustomerControllerTests {
     }
 
     //=======================ORDERS RELATED TESTS=======================
-    //---------------GET---------------
-    //  api/customers/{customerId}/orders/{orderId}
-        /*
-        GET:    get order success
-                get order error
-         */
-
-
     //---------------POST---------------
     //  api/customers/{customerId}/orders
-        /*
-        POST:   create order success
-                create order error
-         */
+    @Test   // Success
+    void testCreateCustomersOrderSuccess() throws Exception {
+        given(this.meliorService.findCustomerById(2)).willReturn(this.customerMapper.toCustomer(customers.get(1)));
+        OrderDto newOrderDto = orders.get(0);
+        newOrderDto.setId(null);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String newOrderAsJSON = objectMapper.writeValueAsString(newOrderDto);
+
+        this.mockMvc.perform(post("/api/customers/2/orders")
+                                .content(newOrderAsJSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isCreated());
+    }
+
+    @Test   // Bad Request
+    void testCreatCustomerOrderError() throws Exception {
+        OrderDto newOrderDto = orders.get(0);
+        newOrderDto.setId(null);
+        newOrderDto.setQuantity(null);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String newOrderAsJSON = objectMapper.writeValueAsString(newOrderDto);
+
+        this.mockMvc.perform(post("/api/customers/2/orders")
+                        .content(newOrderAsJSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
 }
