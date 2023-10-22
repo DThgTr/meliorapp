@@ -1,13 +1,16 @@
 package com.sample.meliorapp.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity {
     @Column(name = "quantity")
-    @NotEmpty
+    @NotNull
+    @Min(value = 1, message = "Quantity must be greater than 0")
     private Integer quantity;
 
     @ManyToOne
