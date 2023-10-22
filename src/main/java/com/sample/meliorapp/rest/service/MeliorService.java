@@ -2,6 +2,7 @@ package com.sample.meliorapp.rest.service;
 
 import com.sample.meliorapp.model.Customer;
 import com.sample.meliorapp.model.FragranceType;
+import com.sample.meliorapp.model.Order;
 import org.springframework.dao.DataAccessException;
 
 import java.util.Collection;
@@ -16,6 +17,12 @@ public interface MeliorService {
     void saveCustomer(Customer customer);
     Collection<Customer> findCustomerByLastName(String lastName);
     void deleteCustomer(Customer customer);
+
+    //------------Order------------
+    Order findOrderById(int id);
+    Collection<Order> findAllORder();
+    void saveOrder(Order order);
+    void deleteOrder(Order order);
 
     //------------Fragrance------------
     FragranceType findFragranceById(int id);
