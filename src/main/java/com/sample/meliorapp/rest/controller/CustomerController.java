@@ -42,7 +42,7 @@ public class CustomerController implements CustomersApi {
     public ResponseEntity<List<CustomerDto>> listCustomers() {
         Collection<Customer> customers = this.meliorService.findAllCustomer();
         if (!customers.isEmpty())
-            return ResponseEntity.ok(customerMapper.toCustomerDtoCollection(customers));
+            return ResponseEntity.ok(customerMapper.toCustomerDtoList(customers));
         return ResponseEntity.notFound().build();
     }
     @Override   // SINGLE

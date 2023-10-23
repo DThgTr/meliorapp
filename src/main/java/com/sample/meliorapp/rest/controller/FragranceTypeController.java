@@ -67,7 +67,7 @@ public class FragranceTypeController implements FragrancetypesApi {
     public ResponseEntity<List<FragranceTypeDto>> listFragranceType() {
         Collection<FragranceType> fragrances = this.meliorService.findAllFragrance();
         if (!fragrances.isEmpty())
-            return ResponseEntity.ok(this.fragranceTypeMapper.toFragranceTypeDtoCollection(fragrances));
+            return ResponseEntity.ok(this.fragranceTypeMapper.toFragranceTypeDtoList(fragrances));
         return ResponseEntity.notFound().build();
 
     }
