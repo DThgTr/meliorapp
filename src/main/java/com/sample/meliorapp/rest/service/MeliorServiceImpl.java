@@ -67,7 +67,7 @@ public class MeliorServiceImpl implements MeliorService {
     }
 
     @Override
-    public Collection<Order> findAllORder() {
+    public Collection<Order> findAllOrder() {
         return orderRepository.findAll();
     }
 

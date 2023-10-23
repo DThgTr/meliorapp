@@ -118,7 +118,7 @@ public class ServiceTests {
     }
     @Test
     void shouldFindAllOrder() {
-        Collection<Order> orders = this.meliorService.findAllORder();
+        Collection<Order> orders = this.meliorService.findAllOrder();
         assertThat(orders.size()).isEqualTo(13);
 
         List<Order> orderList = new ArrayList<>(orders);

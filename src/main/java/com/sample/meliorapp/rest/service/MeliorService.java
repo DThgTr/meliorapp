@@ -20,7 +20,7 @@ public interface MeliorService {
 
     //------------Order------------
     Order findOrderById(int id);
-    Collection<Order> findAllORder();
+    Collection<Order> findAllOrder();
     void saveOrder(Order order);
     void deleteOrder(Order order);
 
