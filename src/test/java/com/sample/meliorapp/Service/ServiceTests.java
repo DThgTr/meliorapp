@@ -234,7 +234,7 @@ public class ServiceTests {
         fragrance = this.meliorService.findFragranceById(1);
         assertThat(fragrance.getName()).isEqualTo("updatedJasmine");
     }
-    /*  UNRESOLVED ORDER MANYTOONE CONSTRAINT
+    /*  UNRESOLVED ORDER MANYTOONE CONSTRAINT*/
     @Test
     void shouldDeleteFragrance() {
         FragranceType fragrance = this.meliorService.findFragranceById(1);
@@ -243,5 +243,4 @@ public class ServiceTests {
         fragrance = this.meliorService.findFragranceById(1);
         assertThat(fragrance).isNull();
     }
-    */
 }

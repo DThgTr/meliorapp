@@ -110,6 +110,7 @@ public class MeliorServiceImpl implements MeliorService {
 
     @Override
     public void deleteFragranceType(FragranceType fragranceType) {
-        fragranceRepository.deleteById(fragranceType.getId());
+        fragranceRepository.deleteRelatedOrdersByFragranceType(fragranceType);
+        fragranceRepository.deleteFragranceType(fragranceType);
     }
 }
