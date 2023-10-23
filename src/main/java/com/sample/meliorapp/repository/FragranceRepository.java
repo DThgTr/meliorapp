@@ -24,5 +24,5 @@ public interface FragranceRepository extends JpaRepository<FragranceType, Intege
     @Transactional
     @Modifying
     @Query("DELETE FROM FragranceType fragranceType WHERE fragranceType = :fragranceType")
-    void deleteFragranceType(@Param("fragranceType") FragranceType fragranceType);
+    void delete(@Param("fragranceType") FragranceType fragranceType);
 }
