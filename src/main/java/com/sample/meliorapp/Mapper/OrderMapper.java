@@ -12,6 +12,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 import java.util.Collection;
+import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface OrderMapper {
@@ -19,6 +20,7 @@ public interface OrderMapper {
     OrderDto toOrderDto(Order order);
     Order toOrder(OrderDto orderDto);
     Order toOrder(OrderFieldsDto orderFieldsDto);
+    List<OrderDto> toOrderDtoList(Collection<Order> orders);
     Collection<OrderDto> toOrderDtos(Collection<Order> orders);
     Collection<Order> toOrders(Collection<OrderDto> orderDtos);
 

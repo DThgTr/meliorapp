@@ -13,6 +13,6 @@ public interface CustomerMapper {
     CustomerDto toCustomerDto(Customer customer);
     Customer toCustomer(CustomerDto customerDto);
     Customer toCustomer(CustomerFieldsDto customerFieldsDto);
-    List<CustomerDto> toCustomerDtoCollection(Collection<Customer> customerCollection);
+    List<CustomerDto> toCustomerDtoList(Collection<Customer> customerCollection);
     Collection<Customer> toCustomers(Collection<CustomerDto> customerDtos);
 }

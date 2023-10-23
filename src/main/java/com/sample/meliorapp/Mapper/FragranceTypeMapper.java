@@ -17,7 +17,7 @@ public interface FragranceTypeMapper {
 
     FragranceType toFragranceType(FragranceTypeFieldsDto fragranceTypeFieldsDto);
 
-    List<FragranceTypeDto> toFragranceTypeDtoCollection(Collection<FragranceType> fragranceTypes);
+    List<FragranceTypeDto> toFragranceTypeDtoList(Collection<FragranceType> fragranceTypes);
     Collection<FragranceType> toFragranceTypes (Collection<FragranceTypeDto> fragranceTypeDtos);
 
 }
