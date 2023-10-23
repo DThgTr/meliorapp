@@ -94,7 +94,7 @@ public class OrderControllerTests {
                     .andExpect(content().contentType("application/json"))
                     .andExpect(jsonPath("$.[0].id").value(1))
                     .andExpect(jsonPath("$.[0].quantity").value("5"))
-                    .andExpect(jsonPath("$.fragranceType.name").value("bougainvillea"))
+                    .andExpect(jsonPath("$.[0].fragranceType.name").value("bougainvillea"))
                     .andExpect(jsonPath("$.[1].id").value(2))
                     .andExpect(jsonPath("$.[1].quantity").value("10"))
                     .andExpect(jsonPath("$.[2].id").value(3))
