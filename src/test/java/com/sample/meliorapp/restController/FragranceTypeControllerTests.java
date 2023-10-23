@@ -215,7 +215,20 @@ public class FragranceTypeControllerTests {
     }
 
     //---------------DELETE---------------
-    /*
-    WAITING FOR SERVICETEST UNRESOLVED ORDER MANYTOONE CONSTAINT
-     */
+    //  api/fragrancetypes/{id}
+    @Test   // Success
+    void testDeleteFragranceTypeSuccess() throws Exception {
+        given(this.meliorService.findFragranceById(1)).willReturn(this.fragranceTypeMapper.toFragranceType(fragrances.get(0)));
+        this.mockMvc.perform(delete("/api/fragrancetypes/1")
+                                .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNoContent());
+    }
+
+    @Test   // Not FOund
+    void testDeleteFragranceTypeError() throws Exception {
+        given(this.meliorService.findFragranceById(100)).willReturn(null);
+        this.mockMvc.perform(delete("/api/fragrancetypes/100")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 }

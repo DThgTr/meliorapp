@@ -51,11 +51,6 @@ public class FragranceTypeController implements FragrancetypesApi {
     }
 
     @Override
-    public ResponseEntity<Void> deleteFragranceType(Integer fragranceTypeId) {
-        return FragrancetypesApi.super.deleteFragranceType(fragranceTypeId);
-    }
-
-    @Override
     public ResponseEntity<FragranceTypeDto> getFragranceType(Integer fragranceTypeId) {
         FragranceType fragranceType = this.meliorService.findFragranceById(fragranceTypeId);
         if (fragranceType != null)
@@ -82,5 +77,14 @@ public class FragranceTypeController implements FragrancetypesApi {
 
         this.meliorService.saveFragranceType(updateFragranceType);
         return new ResponseEntity<>(fragranceTypeMapper.toFragranceTypeDto(updateFragranceType), HttpStatus.NO_CONTENT);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteFragranceType(Integer fragranceTypeId) {
+        FragranceType fragrance = this.meliorService.findFragranceById(fragranceTypeId);
+        if (fragrance == null)
+            return ResponseEntity.notFound().build();
+        this.meliorService.deleteFragranceType(fragrance);
+        return ResponseEntity.noContent().build();
     }
 }
