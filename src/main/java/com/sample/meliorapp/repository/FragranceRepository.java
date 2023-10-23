@@ -13,6 +13,4 @@ import java.util.Collection;
 public interface FragranceRepository extends JpaRepository<FragranceType, Integer> {
     @Query("SELECT DISTINCT fragrance FROM FragranceType fragrance WHERE fragrance.name LIKE :name%")
     Collection<FragranceType> findByName(@Param("name") String name);
-    @Query("SELECT fragrance FROM FragranceType fragrance WHERE fragrance.id =:id")
-    FragranceType findById(@Param("id") int id);
 }
