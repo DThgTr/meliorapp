@@ -35,7 +35,8 @@ public class FragranceTypeController implements FragrancetypesApi {
         this.fragranceTypeMapper = fragranceTypeMapper;
     }
 
-    @Override
+    // POST
+    @Override   //  api/fragrancetypes
     public ResponseEntity<FragranceTypeDto> addFragranceType(FragranceTypeFieldsDto fragranceTypeFieldsDto) {
         FragranceType newFragranceType = fragranceTypeMapper.toFragranceType(fragranceTypeFieldsDto);
         this.meliorService.saveFragranceType(newFragranceType);
@@ -50,7 +51,8 @@ public class FragranceTypeController implements FragrancetypesApi {
         return new ResponseEntity<>(newFragranceTypeDto, headers, HttpStatus.CREATED);
     }
 
-    @Override
+    // GET
+    @Override   //  SINGLE  api/fragrancetypes/{fragranceTypeId}
     public ResponseEntity<FragranceTypeDto> getFragranceType(Integer fragranceTypeId) {
         FragranceType fragranceType = this.meliorService.findFragranceById(fragranceTypeId);
         if (fragranceType != null)
@@ -58,7 +60,7 @@ public class FragranceTypeController implements FragrancetypesApi {
         return ResponseEntity.notFound().build();
     }
 
-    @Override
+    @Override   //  ALL  api/fragrancetypes
     public ResponseEntity<List<FragranceTypeDto>> listFragranceType() {
         Collection<FragranceType> fragrances = this.meliorService.findAllFragrance();
         if (!fragrances.isEmpty())
@@ -67,7 +69,8 @@ public class FragranceTypeController implements FragrancetypesApi {
 
     }
 
-    @Override
+    //  PUT
+    @Override   //  api/fragrancetypes/{fragranceTypeId}
     public ResponseEntity<FragranceTypeDto> updateFragranceType(Integer fragranceTypeId, FragranceTypeFieldsDto fragranceTypeFieldsDto) {
         FragranceType updateFragranceType = this.meliorService.findFragranceById(fragranceTypeId);
         if (updateFragranceType == null)
@@ -79,7 +82,8 @@ public class FragranceTypeController implements FragrancetypesApi {
         return new ResponseEntity<>(fragranceTypeMapper.toFragranceTypeDto(updateFragranceType), HttpStatus.NO_CONTENT);
     }
 
-    @Override
+    //  DELETE
+    @Override   //  api/fragrancetypes/{fragranceTypeId}
     public ResponseEntity<Void> deleteFragranceType(Integer fragranceTypeId) {
         FragranceType fragrance = this.meliorService.findFragranceById(fragranceTypeId);
         if (fragrance == null)

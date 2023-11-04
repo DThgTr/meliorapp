@@ -38,14 +38,14 @@ public class CustomerController implements CustomersApi {
     }
     //------------------------Customers-related------------------------
     //GET
-    @Override   // ALL
+    @Override   // ALL      api/customers
     public ResponseEntity<List<CustomerDto>> listCustomers() {
         Collection<Customer> customers = this.meliorService.findAllCustomer();
         if (!customers.isEmpty())
             return ResponseEntity.ok(customerMapper.toCustomerDtoList(customers));
         return ResponseEntity.notFound().build();
     }
-    @Override   // SINGLE
+    @Override   // SINGLE   api/customers/{customerId}
     public ResponseEntity<CustomerDto> getCustomer(Integer customerId) {
         Customer customer = this.meliorService.findCustomerById(customerId);
         if (customer != null)
@@ -53,7 +53,7 @@ public class CustomerController implements CustomersApi {
         return ResponseEntity.notFound().build();
     }
     //POST
-    @Override
+    @Override   //  api/customers
     public ResponseEntity<CustomerDto> addCustomer(CustomerFieldsDto customerFieldsDto) {
         Customer newCustomer = customerMapper.toCustomer(customerFieldsDto);
         this.meliorService.saveCustomer(newCustomer);
@@ -68,7 +68,7 @@ public class CustomerController implements CustomersApi {
         return new ResponseEntity<>(newCustomerDto, headers, HttpStatus.CREATED);
     }
     //PUT
-    @Override
+    @Override   //  api/customers/{customerId}
     public ResponseEntity<CustomerDto> updateCustomer(Integer customerId, CustomerFieldsDto customerFieldsDto) {
         Customer updateCustomer = this.meliorService.findCustomerById(customerId);
         if (updateCustomer == null)
@@ -85,7 +85,7 @@ public class CustomerController implements CustomersApi {
         return new ResponseEntity<>(customerMapper.toCustomerDto(updateCustomer), HttpStatus.NO_CONTENT);
     }
     //DELETE
-    @Override
+    @Override   //  api/customers/{customerId}
     public ResponseEntity<Void> deleteCustomer(Integer customerId) {
         Customer customer = this.meliorService.findCustomerById(customerId);
         if (customer == null)
@@ -97,7 +97,7 @@ public class CustomerController implements CustomersApi {
 
     //------------------------Orders-related------------------------
     //POST
-    @Override
+    @Override   //  api/customers/{customerId}/orders
     public ResponseEntity<OrderDto> addCustomersOrder(Integer customerId, OrderFieldsDto orderFieldsDto) {
         Order newOrder = orderMapper.toOrder(orderFieldsDto);
 

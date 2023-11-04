@@ -32,7 +32,9 @@ public class OrderController implements OrdersApi {
         this.orderMapper = orderMapper;
         this.fragranceTypeMapper = fragranceTypeMapper;
     }
-    @Override
+
+    //  GET
+    @Override   // SINGLE  api/orders/{orderId}
     public ResponseEntity<OrderDto> getOrder(Integer orderId) {
         Order order = this.meliorService.findOrderById(orderId);
         if (order != null)
@@ -40,7 +42,7 @@ public class OrderController implements OrdersApi {
         return ResponseEntity.notFound().build();
     }
 
-    @Override
+    @Override   // ALL     api/orders
     public ResponseEntity<List<OrderDto>> listOrders() {
         Collection<Order> orders = this.meliorService.findAllOrder();
         if (!orders.isEmpty())
@@ -48,7 +50,8 @@ public class OrderController implements OrdersApi {
         return ResponseEntity.notFound().build();
     }
 
-    @Override
+    //  PUT
+    @Override   //  api/orders/{orderId}
     public ResponseEntity<OrderDto> updateOrder(Integer orderId, OrderFieldsDto orderFieldsDto) {
         Order updateOrder = this.meliorService.findOrderById(orderId);
         if (updateOrder == null)
@@ -61,7 +64,8 @@ public class OrderController implements OrdersApi {
         return new ResponseEntity<>(orderMapper.toOrderDto(updateOrder), HttpStatus.NO_CONTENT);
     }
 
-    @Override
+    //  DELETE
+    @Override   //  api/orders/{orderId}
     public ResponseEntity<Void> deleteOrder(Integer orderId) {
         Order order = this.meliorService.findOrderById(orderId);
         if (order == null)
