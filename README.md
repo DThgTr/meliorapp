@@ -3,14 +3,14 @@ This is a backend Spring application, thus it only provides a REST API. **There 
 
 ## Melior Entity-relationship Model
 
-![melior-ermodel](meliorER.png)
+![melior-ermodel](Melior_ER_model.png)
 
 ## Run Melior Application locally
-This project use Apache Maven and run using a Maven wrapper.
+This project use Apache Maven and come with a Maven wrapper.
 ### With Maven command line
 ```
 git clone https://github.com/DThgTr/meliorapp.git
 cd /meliorapp
 ./mvnw spring-boot:run
 ```
-REST endpoints are exposed using Swagger UI. It can be accessed at :[http://localhost:9966/melior/](http://localhost:9966/melior/swagger-ui.html)
+REST endpoints are documented using Swagger UI. It can be accessed at: [http://localhost:9966/melior/swagger-ui.html](http://localhost:9966/melior/swagger-ui.html)
