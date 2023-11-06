@@ -20,7 +20,7 @@
 		<java.version>17</java.version>
 		<springdoc-openapi-ui.version>2.0.2</springdoc-openapi-ui.version>
 		<jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
-		<openapi-generator-maven-plugin.version>6.3.0</openapi-generator-maven-plugin.version>
+		<openapi-generator-maven-plugin.version>6.4.0</openapi-generator-maven-plugin.version>
 		<build-helper-maven-plugin.version>3.2.0</build-helper-maven-plugin.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
