@@ -20,7 +20,7 @@ These are meant to be accessed after application start:
 [http://localhost:9966/melior/swagger-ui.html](http://localhost:9966/melior/swagger-ui.html).
 * The Open API description is accessible at: [http://localhost:9966/melior/v3/api-docs](http://localhost:9966/melior/v3/api-docs).
 
-# Generated Code
+## Generated Code
 There are required classes generated during build process:
 * DTO Mappers
 * DTOs
