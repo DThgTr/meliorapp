@@ -73,6 +73,7 @@ public class OrderControllerTests {
                     .andExpect(content().contentType("application/json"))
                     .andExpect(jsonPath("$.id").value(1))
                     .andExpect(jsonPath("$.quantity").value("5"))
+                    .andExpect(jsonPath("$.creationDate").value("2023-12-01"))
                     .andExpect(jsonPath("$.fragranceType.name").value("bougainvillea"));
     }
 
