@@ -987,10 +987,17 @@ components:
           minimum: 1
           maximum: 50
           example: 10
+        creationDate:
+          title: creation date
+          description: the date of the creation of an order
+          type: string
+          format: date
+          example: '2023-01-01'
         fragranceType:
           $ref: '#/components/schemas/FragranceType'
       required:
         - quantity
+        - creationDate
         - fragranceType
     Order:
       title: Order
