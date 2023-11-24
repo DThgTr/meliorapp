@@ -22,6 +22,7 @@ CREATE INDEX customers_last_name ON customers (last_name);
 CREATE TABLE orders (
     id                  INTEGER IDENTITY PRIMARY KEY,
     quantity            INTEGER NOT NULL,
+    creation_date       DATE,
     fragrance_type_id   INTEGER NOT NULL,
     customer_id         INTEGER NOT NULL
 );
