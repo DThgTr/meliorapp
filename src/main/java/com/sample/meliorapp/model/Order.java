@@ -15,7 +15,7 @@ public class Order extends BaseEntity {
 
     @Column(name = "creation_date", columnDefinition = "DATE")
     @NotNull
-    private LocalDate date;
+    private LocalDate creationDate;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -34,11 +34,11 @@ public class Order extends BaseEntity {
     }
 
     public LocalDate getDate() {
-        return date;
+        return creationDate;
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.creationDate = date;
     }
 
     public Customer getCustomer() {
