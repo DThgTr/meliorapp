@@ -2,8 +2,8 @@ package com.sample.meliorapp.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "orders")
@@ -12,6 +12,10 @@ public class Order extends BaseEntity {
     @NotNull
     @Min(value = 1, message = "Quantity must be greater than 0")
     private Integer quantity;
+
+    @Column(name = "creation_date", columnDefinition = "DATE")
+    @NotNull
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -27,6 +31,14 @@ public class Order extends BaseEntity {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Customer getCustomer() {
