@@ -42,6 +42,7 @@ public class ServiceTests {
         assertThat(customer.getLastName()).isEqualTo("MontayaOne");
         assertThat(customer.getOrders().size()).isEqualTo(1);
         assertThat(customer.getOrders().get(0).getQuantity()).isEqualTo(5);
+        assertThat(customer.getOrders().get(0).getDate().toString()).isEqualTo("2023-01-01");
         assertThat(customer.getOrders().get(0).getFragranceType()).isNotNull();
         assertThat(customer.getOrders().get(0).getFragranceType().getName()).isEqualTo("lavender");
     }
@@ -234,7 +235,6 @@ public class ServiceTests {
         fragrance = this.meliorService.findFragranceById(1);
         assertThat(fragrance.getName()).isEqualTo("updatedJasmine");
     }
-    /*  UNRESOLVED ORDER MANYTOONE CONSTRAINT*/
     @Test
     void shouldDeleteFragrance() {
         FragranceType fragrance = this.meliorService.findFragranceById(1);
