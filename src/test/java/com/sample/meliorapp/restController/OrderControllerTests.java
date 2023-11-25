@@ -1,6 +1,7 @@
 package com.sample.meliorapp.restController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sample.meliorapp.ApplicationTestConfig;
 import com.sample.meliorapp.Mapper.OrderMapper;
 import com.sample.meliorapp.rest.advice.ExceptionControllerAdvice;
@@ -136,6 +137,8 @@ public class OrderControllerTests {
         updateOrderDto.setFragranceType(updateFragrance);
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
         String updateOrderAsJSON = mapper.writeValueAsString(updateOrderDto);
 
         this.mockMvc.perform(put("/api/orders/1")
