@@ -161,6 +161,7 @@ public class OrderControllerTests {
         OrderDto updateOrderDto = orders.get(0);
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         String updateOrderAsJSON = mapper.writeValueAsString(updateOrderDto);
 
         this.mockMvc.perform(put("/api/orders/100")
