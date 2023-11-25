@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,10 @@ public class OrderControllerTests {
         orders = new ArrayList<>();
 
         OrderDto order = new OrderDto();
-        orders.add(order.id(1).quantity(5).fragranceType(fragrance));
+        orders.add(order.id(1)
+                        .quantity(5)
+                        .creationDate(LocalDate.of(2023, 12, 01))
+                        .fragranceType(fragrance));
         order = new OrderDto();
         orders.add(order.id(2).quantity(10));
         order = new OrderDto();
