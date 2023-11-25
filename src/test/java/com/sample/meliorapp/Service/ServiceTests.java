@@ -41,7 +41,7 @@ public class ServiceTests {
         assertThat(customer.getLastName()).isEqualTo("MontayaOne");
         assertThat(customer.getOrders().size()).isEqualTo(1);
         assertThat(customer.getOrders().get(0).getQuantity()).isEqualTo(5);
-        assertThat(customer.getOrders().get(0).getDate().toString()).isEqualTo("2023-01-01");
+        assertThat(customer.getOrders().get(0).getCreationDate().toString()).isEqualTo("2023-01-01");
         assertThat(customer.getOrders().get(0).getFragranceType()).isNotNull();
         assertThat(customer.getOrders().get(0).getFragranceType().getName()).isEqualTo("lavender");
     }
@@ -113,7 +113,7 @@ public class ServiceTests {
     void shouldFindOrderById() {
         Order order = this.meliorService.findOrderById(1);
         assertThat(order.getQuantity()).isEqualTo(5);
-        assertThat(order.getDate().toString()).isEqualTo("2023-01-01");
+        assertThat(order.getCreationDate().toString()).isEqualTo("2023-01-01");
         assertThat(order.getCustomer().getFirstName()).isEqualTo("JeffOne");
         assertThat(order.getCustomer().getLastName()).isEqualTo("MontayaOne");
     }
@@ -124,22 +124,22 @@ public class ServiceTests {
 
         List<Order> orderList = new ArrayList<>(orders);
         assertThat(orderList.get(0).getQuantity()).isEqualTo(5);
-        assertThat(orderList.get(0).getDate().toString()).isEqualTo("2023-01-01");
+        assertThat(orderList.get(0).getCreationDate().toString()).isEqualTo("2023-01-01");
         assertThat(orderList.get(0).getFragranceType().getName()).isEqualTo("lavender");
         assertThat(orderList.get(0).getCustomer().getFirstName()).isEqualTo("JeffOne");
 
         assertThat(orderList.get(2).getQuantity()).isEqualTo(3);
-        assertThat(orderList.get(2).getDate().toString()).isEqualTo("2023-01-01");
+        assertThat(orderList.get(2).getCreationDate().toString()).isEqualTo("2023-01-01");
         assertThat(orderList.get(2).getFragranceType().getName()).isEqualTo("rose");
         assertThat(orderList.get(2).getCustomer().getFirstName()).isEqualTo("JeffThree");
 
         assertThat(orderList.get(4).getQuantity()).isEqualTo(13);
-        assertThat(orderList.get(4).getDate().toString()).isEqualTo("2023-01-04");
+        assertThat(orderList.get(4).getCreationDate().toString()).isEqualTo("2023-01-04");
         assertThat(orderList.get(4).getFragranceType().getName()).isEqualTo("jasmine");
         assertThat(orderList.get(4).getCustomer().getFirstName()).isEqualTo("JeffFour");
 
         assertThat(orderList.get(12).getQuantity()).isEqualTo(2);
-        assertThat(orderList.get(12).getDate().toString()).isEqualTo("2023-11-23");
+        assertThat(orderList.get(12).getCreationDate().toString()).isEqualTo("2023-11-23");
         assertThat(orderList.get(12).getFragranceType().getName()).isEqualTo("lavender");
         assertThat(orderList.get(12).getCustomer().getFirstName()).isEqualTo("Het");
     }
@@ -152,7 +152,7 @@ public class ServiceTests {
 
         Order order = new Order();
         order.setQuantity(12);
-        order.setDate(localDate);
+        order.setCreationDate(localDate);
         order.setFragranceType(this.meliorService.findFragranceById(4));
         customer.addOrder(order);
 
@@ -166,7 +166,7 @@ public class ServiceTests {
         assertThat(order.getId()).isNotNull();
         order = this.meliorService.findOrderById(order.getId());
         assertThat(order.getQuantity()).isEqualTo(12);
-        assertThat(order.getDate().toString()).isEqualTo(localDate.toString());
+        assertThat(order.getCreationDate().toString()).isEqualTo(localDate.toString());
         assertThat(order.getCustomer().getFirstName()).isEqualTo("JeffFive");
         assertThat(order.getFragranceType().getName()).isEqualTo("citrusMild");
     }

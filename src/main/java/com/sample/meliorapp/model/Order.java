@@ -33,11 +33,11 @@ public class Order extends BaseEntity {
         this.quantity = quantity;
     }
 
-    public LocalDate getDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setDate(LocalDate date) {
+    public void setCreationDate(LocalDate date) {
         this.creationDate = date;
     }
 
