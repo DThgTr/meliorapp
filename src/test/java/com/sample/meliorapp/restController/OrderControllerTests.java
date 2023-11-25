@@ -62,9 +62,11 @@ public class OrderControllerTests {
                         .creationDate(LocalDate.of(2023, 12, 01))
                         .fragranceType(fragrance));
         order = new OrderDto();
-        orders.add(order.id(2).quantity(10));
+        orders.add(order.id(2)
+                        .quantity(10));
         order = new OrderDto();
-        orders.add(order.id(3).quantity(15));
+        orders.add(order.id(3)
+                        .quantity(15));
     }
     //---------------GET---------------
     // GET SINGLE: api/orders/{id}
