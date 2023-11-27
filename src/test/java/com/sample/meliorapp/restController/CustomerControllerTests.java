@@ -1,6 +1,7 @@
 package com.sample.meliorapp.restController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sample.meliorapp.ApplicationTestConfig;
 import com.sample.meliorapp.Mapper.CustomerMapper;
 import com.sample.meliorapp.Mapper.OrderMapper;
@@ -22,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +67,7 @@ public class CustomerControllerTests {
                                     .city("Dallas")
                                     .telephone("100000001")
                                     .email("jmontOne@corpx.com")
-                                    .addOrdersItem(generateTestOrderWithIdAndQuantity(customerWithOrder, 1, 5)));
+                                    .addOrdersItem(generateTestOrder(customerWithOrder, 1, 5, LocalDate.of(2023, 12, 01))));
         CustomerDto customer = new CustomerDto();
         customers.add(customer.id(2)
                             .firstName("JeffTwo")
@@ -102,6 +104,7 @@ public class CustomerControllerTests {
         OrderDto order = new OrderDto();
         orders.add(order.id(3)
                         .quantity(10)
+                        .creationDate(LocalDate.of(2023,12,01))
                         .fragranceType(fragranceType));
         order = new OrderDto();
         orders.add(order.id(4)
@@ -109,12 +112,16 @@ public class CustomerControllerTests {
                         .fragranceType(fragranceType));
     }
 
-    private OrderDto generateTestOrderWithIdAndQuantity(final CustomerDto customer, final int id, final int quantity) {
+    private OrderDto generateTestOrder(final CustomerDto customer,
+                                       final int id,
+                                       final int quantity,
+                                       final LocalDate creationDate) {
         FragranceTypeDto fragranceType = new FragranceTypeDto();
         OrderDto order = new OrderDto();
         order.id(id)
             .customerId(customer.getId())
             .quantity(quantity)
+            .creationDate(creationDate)
             .fragranceType(fragranceType.id(2).name("lavender"));
         return order;
     }
@@ -171,6 +178,8 @@ public class CustomerControllerTests {
         newCustomerDto.setId(null);
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
         String newCustomerAsJSON = mapper.writeValueAsString(newCustomerDto);
 
         this.mockMvc.perform(post("/api/customers")
@@ -186,6 +195,8 @@ public class CustomerControllerTests {
         newCustomerDto.setFirstName(null);
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
         String newCustomerAsJSON = mapper.writeValueAsString(newCustomerDto);
 
         this.mockMvc.perform(post("/api/customers")
@@ -205,6 +216,8 @@ public class CustomerControllerTests {
         updateCustomerDto.setLastName("updatedMontayaOne");
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
         String updateCustomerAsJSON = mapper.writeValueAsString(updateCustomerDto);
 
         this.mockMvc.perform(put("/api/customers/1")
@@ -231,6 +244,8 @@ public class CustomerControllerTests {
         updateCustomerDto.setLastName("updatedMontayaOne");
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
         String updateCustomerAsJSON = mapper.writeValueAsString(updateCustomerDto);
 
         this.mockMvc.perform(put("/api/customers/1")
@@ -252,6 +267,8 @@ public class CustomerControllerTests {
         CustomerDto updateCustomerDto = customers.get(0);
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
         String updateCustomerAsJSON = mapper.writeValueAsString(updateCustomerDto);
 
         this.mockMvc.perform(put("/api/customers/100")
@@ -266,6 +283,8 @@ public class CustomerControllerTests {
         updateCustomerDto.setLastName(null);
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
         String updateCustomerAsJSON = mapper.writeValueAsString(updateCustomerDto);
 
         this.mockMvc.perform(put("/api/customers/1")
