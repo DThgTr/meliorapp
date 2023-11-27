@@ -333,7 +333,7 @@ public class CustomerControllerTests {
     }
 
     @Test   // Bad Request
-    void testCreatCustomerOrderError() throws Exception {
+    void testCreateCustomerOrderError() throws Exception {
         OrderDto newOrderDto = orders.get(0);
         newOrderDto.setId(null);
         newOrderDto.setQuantity(null);
