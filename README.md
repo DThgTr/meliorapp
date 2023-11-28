@@ -20,7 +20,8 @@ These are meant to be accessed after application start:
 [http://localhost:9966/melior/swagger-ui.html](http://localhost:9966/melior/swagger-ui.html).
 * The Open API description is accessible at: [http://localhost:9966/melior/v3/api-docs](http://localhost:9966/melior/v3/api-docs).
 
-## Generated Code
+## Build Melior Application
+### Generated Content
 There are required classes generated during build process:
 * DTO Mappers
 * DTOs
@@ -34,8 +35,18 @@ Generated packages and their corresponding tools:
 |-----------------------------|------------------|
 | com.sample.meliorapp.Mapper | [MapStruct](https://mapstruct.org/)        |
 | com.sample.meliorapp.rest   | [OpenAPI Generator maven plugin](https://github.com/OpenAPITools/openapi-generator/) |
-
+### Generate code with Maven
 Use the following command to generate them using the Maven wrapper:
+* Build and Test:
 ```
 ./mvnw clean install
 ```
+* Build only:
+```
+./mvnw clean install -DskipTests=true
+```
+* Test only:
+```
+./mvnw clean test
+```
+If you have Maven installed on your machine, you can use use its associated command ```mvn``` instead of the wrapper ```./mvnw```
