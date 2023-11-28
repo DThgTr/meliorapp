@@ -338,8 +338,10 @@ public class CustomerControllerTests {
         newOrderDto.setId(null);
         newOrderDto.setQuantity(null);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String newOrderAsJSON = objectMapper.writeValueAsString(newOrderDto);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
+        String newOrderAsJSON = mapper.writeValueAsString(newOrderDto);
 
         this.mockMvc.perform(post("/api/customers/2/orders")
                         .content(newOrderAsJSON)
