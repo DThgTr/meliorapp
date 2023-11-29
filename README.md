@@ -45,8 +45,4 @@ Use the following command to generate them using the Maven wrapper:
 ```
 ./mvnw clean install -DskipTests=true
 ```
-* Test only:
-```
-./mvnw clean test
-```
-If you have Maven installed on your machine, you can use use its associated command ```mvn``` instead of the wrapper ```./mvnw```
+If you have Maven installed on your machine, you can use its associated command ```mvn``` instead of the wrapper ```./mvnw```
