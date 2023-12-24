@@ -18,6 +18,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Test class for {@link MeliorService}
+ */
 @SpringBootTest
 @ActiveProfiles("hsqldb")
 public class ServiceTests {
