@@ -1,0 +1,31 @@
+INSERT INTO customers VALUES (1, 'JeffOne', 'MontayaOne', '101 SpringCreek St.', 'CityOne', '100000001', 'mail1@corpx.com');
+INSERT INTO customers VALUES (2, 'JeffTwo', 'MontayaTwo', '102 SpringCreek St.', 'CityTwo', '100000002', 'mail2@corpx.com');
+INSERT INTO customers VALUES (3, 'JeffThree', 'MontayaThree', '103 SpringCreek St.', 'CityThree', '100000003', 'mail3@corpx.com');
+INSERT INTO customers VALUES (4, 'JeffFour', 'MontayaFour', '104 SpringCreek St.', 'CityFour', '100000004', 'mail4@corpx.com');
+INSERT INTO customers VALUES (5, 'JeffFive', 'MontayaFive', '105 SpringCreek St.', 'CityFive', '100000005', 'mail5@corpx.com');
+INSERT INTO customers VALUES (6, 'JeffSix', 'MontayaSix', '106 SpringCreek St.', 'CitySix', '100000006', 'mail6@corpx.com');
+INSERT INTO customers VALUES (7, 'JeffSeven', 'MontayaSeven', '107 SpringCreek St.', 'CitySeven', '100000007', 'mail7@corpx.com');
+INSERT INTO customers VALUES (8, 'Bob', 'Yatamon', '108 SpringCreek St.', 'CityEight', '100000008', 'mail8@corpx.com');
+INSERT INTO customers VALUES (9, 'Ted', 'Yatamon', '109 SpringCreek St.', 'CityNine', '100000009', 'mail9@corpx.com');
+INSERT INTO customers VALUES (10, 'Het', 'Yatamon', '110 SpringCreek St.', 'CityTen', '100000010', 'mail10@corpx.com');
+
+INSERT INTO fragrances VALUES (1, 'lavender');
+INSERT INTO fragrances VALUES (2, 'rose');
+INSERT INTO fragrances VALUES (3, 'jasmine');
+INSERT INTO fragrances VALUES (4, 'citrusMild');
+INSERT INTO fragrances VALUES (5, 'citrusModerate');
+INSERT INTO fragrances VALUES (6, 'citrusHarsh');
+
+INSERT INTO orders VALUES (1, 5, '2023-01-01', 1, 1);
+INSERT INTO orders VALUES (2, 7, '2023-01-01', 6, 2);
+INSERT INTO orders VALUES (3, 3, '2023-01-01', 2, 3);
+INSERT INTO orders VALUES (4, 4, '2023-01-03', 2, 3);
+INSERT INTO orders VALUES (5, 13, '2023-01-04', 3, 4);
+INSERT INTO orders VALUES (6, 20, '2023-01-14', 4, 5);
+INSERT INTO orders VALUES (7, 10, '2023-01-27', 1, 6);
+INSERT INTO orders VALUES (8, 11, '2023-02-05', 1, 6);
+INSERT INTO orders VALUES (9, 1, '2023-02-13', 5, 7);
+INSERT INTO orders VALUES (10, 1, '2023-02-19', 2, 8);
+INSERT INTO orders VALUES (11, 3, '2023-07-08', 5, 9);
+INSERT INTO orders VALUES (12, 6, '2023-07-22', 2, 10);
+INSERT INTO orders VALUES (13, 2, '2023-11-23', 1, 10);
