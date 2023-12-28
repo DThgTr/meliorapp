@@ -20,6 +20,35 @@ These are meant to be accessed after application start:
 [http://localhost:9966/melior/swagger-ui.html](http://localhost:9966/melior/swagger-ui.html).
 * The Open API description is accessible at: [http://localhost:9966/melior/v3/api-docs](http://localhost:9966/melior/v3/api-docs).
 
+### Database configuration
+By default, Melior uses an in-memory database (HSQLDB) which gets populated at startup with data. 
+Similar setup is provided for MySQL and PostgreSQL persistent database configurations. 
+To run Melior Application using either MySQL or PostgreSQL, the profile configuration has to be changed accordingly:
+
+1. **MySQL:** replace 'hsqldb' with 'mysql'
+```
+spring.profiles.active=hsqldb
+```
+defined in `application.properties`
+
+MySQL configuration is defined in `application-mysql.properties`. It should be checked out a long side MySQL's `setup.sql` before setting up your own MySQL instance in case of any inconsistency.
+
+2. **Postgres:** replace 'hsqldb' with 'postgres'
+```
+spring.profiles.active=hsqldb
+```
+defined in `application.properties`
+
+Postgres configuration is defined `application-postgres.properties`. Likewise, it should be checked out before setting up your own PostgreSQL instance for any inconsistency.
+
+Unlike MySQL configuration, the corresponding database (meliordb) has to be created beforehand. The name can be changed as long as it stay consistent with `application-postgres.properties`'s configuration.
+
+3. **Set up Database:**
+
+|As a local instance | As a Docker Container      |
+|--------------------|----------------------------|
+|[MySQL](https://dev.mysql.com/doc/mysql-getting-started/en/)<br/>[Postgres](https://www.postgresqltutorial.com/postgresql-getting-started/)| [MySQL](https://hub.docker.com/_/mysql)<br/>[Postgres](https://hub.docker.com/_/postgres) |
+
 ## Build Melior Application
 ### Generated Content
 There are required classes generated during build process:
